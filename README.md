@@ -54,7 +54,7 @@ click on create
 save the config file snippet content in ~/.oci/config sobstituting the key_file value with ~/.oci/my-api-key.pem
 ```
 
-* Configure the tenancy_ocid variable in the var.json file with the value saved in the `~/.oci/config` file.
+* Configure the `tenancy_ocid` variable in the `var.json` file with the value saved in the `~/.oci/config` file.
 
 * Choose a O.S. image to use in your VPSs. A list is available [here](https://docs.oracle.com/en-us/iaas/images/). In this example we will use `Canonical-Ubuntu-20.04-Minimal-2021.05.17-0`.
 
