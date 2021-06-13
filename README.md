@@ -2,7 +2,7 @@
 
 From [campisano.org/Oci (Cloud)](http://www.campisano.org/wiki/en/Oci_(Cloud)#Setup_free_virtual_machines_using_Terraform)
 
-This project shows how to use (semi-)minimalistic Terraform modules (configurable with a custom vars.json file) to create a [free-tier infrastructure](https://www.oracle.com/cloud/free/#always-free) with 2 free Virtual Machines (or a more complex one) in the Oracle OCI cloud.
+This project shows how to use (semi-)minimalistic Terraform modules (configurable with a custom vars.json file) to create a [free-tier infrastructure](https://www.oracle.com/cloud/free/#always-free) with 2 free Virtual Private Servers (VPS) in the Oracle Cloud Infrastructure (OCI).
 
 
 
@@ -43,7 +43,7 @@ Minimum System Requirements
 
 * An OCI [account](https://www.oracle.com/cloud/sign-in.html), a [free account](https://www.oracle.com/cloud/free/) can be used.
 
-* The Oracle config file (~/.oci/config) configured to have access to the OCI API services using [APIKeyAuth](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/terraformproviderconfiguration.htm#APIKeyAuth) authentication. This will be used by Terraform to create and manage resources e.g. the Virtual Machine creation. Follow those steps:
+* The Oracle config file (~/.oci/config) configured to have access to the OCI API services using [APIKeyAuth](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/terraformproviderconfiguration.htm#APIKeyAuth) authentication. This will be used by Terraform to create and manage resources e.g. the VPS creation. Follow those steps:
 
 ```
 go to https://cloud.oracle.com/identity/users
@@ -51,10 +51,12 @@ open you user api-key section
 click on add apikey
 download private key to ~/.oci/my-api-key.pem
 click on create
-save the config file snippet content in ~/oci/config sobstituting the key_file value with ~/.oci/my-api-key.pem
+save the config file snippet content in ~/.oci/config sobstituting the key_file value with ~/.oci/my-api-key.pem
 ```
 
-* An SSH Key Pair to have access to the Virtual Machines. To create a new keypair, do the following:
+* Configure the tenancy_ocid variable in the var.json file with the value saved in the ~/.oci/config file.
+
+* An SSH Key Pair to have access to the VPS. To create a new keypair, do the following:
 
 ```
 ssh-keygen -q -t rsa -b 2048 -N '' -f ~/.ssh/oci-keypair
@@ -65,7 +67,7 @@ chmod 400 ~/.ssh/oci-keypair
 
 * Install [Make](https://www.gnu.org/software/make/). This tool is used to run predefined Terraform commands.
 
-* Choose a O.S. image to use for your Virtual Machines. A list is available [here](https://docs.oracle.com/en-us/iaas/images/). In this example we will use Canonical-Ubuntu-20.04-Minimal-2021.05.17-0.
+* Choose a O.S. image to use for your VPSs. A list is available [here](https://docs.oracle.com/en-us/iaas/images/). In this example we will use Canonical-Ubuntu-20.04-Minimal-2021.05.17-0.
 
 
 
@@ -103,21 +105,21 @@ Example
 
 * Login
 
-You can login in your Virtual Machine with the command `ssh -i ~/.ssh/oci-keypair root@111.22.33.44`. Remember to replace `111.22.33.44` with the static ip of your new machine. It is shown in the output of the `make apply` command.
+You can login in your VPS with the command `ssh -i ~/.ssh/oci-keypair root@111.22.33.44`. Remember to replace `111.22.33.44` with the static ip of your new machine. It is shown in the output of the `make apply` command.
 
 
 
 Customize
 ---------
 
-This project can create several Virtual Machines. Each machine can be configured with a static ip, and an initial script can be defined to customize the machine O.S. so that software can be added or removed programmatically. This is configurable modifying the variables defined in the `vars.json` file.
+This project can create several VPSs. Each machine can be configured with a static ip, and an initial script can be defined to customize the machine O.S. so that software can be added or removed programmatically. This is configurable modifying the variables defined in the `vars.json` file.
 
 The following snippet is a sample of a `vars.json` to:
 * configure the oci provider;
 * configure the oci modules that creates:
   * a virtual network;
   * two subnetworks;
-  * a virtual machine in each subnetwork.
+  * a machine in each subnetwork.
 
 ```
 {
