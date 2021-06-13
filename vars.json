@@ -1,0 +1,42 @@
+{
+    "oci_provider": {
+        "auth": "APIKey",
+        "config_file_profile": "DEFAULT",
+        "tenancy_ocid": "ocid1.tenancy.oc1..aaaaaaaau53ror64zva7gnsrnahfq23ksnngiyglsf4dutzltbb7dag7ugua"
+    },
+    "oci_vcn_module": {
+        "tf-vcn1": {
+            "cidr_block": "10.1.0.0/16"
+        }
+    },
+    "oci_subnet_module": {
+        "tf-vcn1-subnet1": {
+            "vcn_name": "tf-vcn1",
+            "cidr_block": "10.1.20.0/24"
+        },
+        "tf-vcn1-subnet2": {
+            "vcn_name": "tf-vcn1",
+            "cidr_block": "10.1.21.0/24"
+        }
+    },
+    "oci_instance_module": {
+        "tf-instance1": {
+            "subnet_name": "tf-vcn1-subnet1",
+            "keypair_path": "~/.ssh/oci-keypair.pub",
+            "instance_shape": "VM.Standard.E2.1.Micro",
+            "image_ocid": "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaae37x4oll5jixkbmkc63pk25ggvjh3h4iug7trp35agtexcpatw6q",
+            "boot_disk_size": 100,
+            "static_ip": true,
+            "init_script_path": "init_script.sh"
+        },
+        "tf-instance2": {
+            "subnet_name": "tf-vcn1-subnet2",
+            "keypair_path": "~/.ssh/oci-keypair.pub",
+            "instance_shape": "VM.Standard.E2.1.Micro",
+            "image_ocid": "ocid1.image.oc1.eu-amsterdam-1.aaaaaaaae37x4oll5jixkbmkc63pk25ggvjh3h4iug7trp35agtexcpatw6q",
+            "boot_disk_size": 100,
+            "static_ip": true,
+            "init_script_path": "init_script.sh"
+        }
+    }
+}
