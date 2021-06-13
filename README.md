@@ -56,6 +56,8 @@ save the config file snippet content in ~/.oci/config sobstituting the key_file 
 
 * Configure the tenancy_ocid variable in the var.json file with the value saved in the `~/.oci/config` file.
 
+* Choose a O.S. image to use in your VPSs. A list is available [here](https://docs.oracle.com/en-us/iaas/images/). In this example we will use `Canonical-Ubuntu-20.04-Minimal-2021.05.17-0`.
+
 * An SSH Key Pair to have access to the VPS. To create a new keypair, do the following:
 
 ```
@@ -66,8 +68,6 @@ chmod 400 ~/.ssh/oci-keypair
 * The Terraform command. To install, see [the official doc](https://www.terraform.io/downloads.html).
 
 * Install [Make](https://www.gnu.org/software/make/). This tool is used to run predefined Terraform commands.
-
-* Choose a O.S. image to use for your VPSs. A list is available [here](https://docs.oracle.com/en-us/iaas/images/). In this example we will use `Canonical-Ubuntu-20.04-Minimal-2021.05.17-0`.
 
 
 
