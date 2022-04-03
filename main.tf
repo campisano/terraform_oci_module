@@ -43,8 +43,10 @@ module "oci_instance" {
   ad_name          = data.oci_identity_availability_domain.ad.name
   keypair_path     = each.value.keypair_path
   instance_shape   = each.value.instance_shape
+  shape_ocpus      = lookup(each.value, "shape_ocpus", null)
+  shape_mem        = lookup(each.value, "shape_mem", null)
   image_ocid       = each.value.image_ocid
-  boot_disk_size   = each.value.boot_disk_size
+  boot_disk_size   = lookup(each.value, "boot_disk_size", null)
   static_ip        = lookup(each.value, "static_ip", false)
   init_script_path = lookup(each.value, "init_script_path", null)
 }

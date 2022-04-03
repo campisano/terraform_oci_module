@@ -10,6 +10,11 @@ resource "oci_core_instance" "instance" {
   availability_domain = var.ad_name
   shape               = var.instance_shape
 
+  shape_config {
+    ocpus         = var.shape_ocpus
+    memory_in_gbs = var.shape_mem
+  }
+
   source_details {
     source_type             = "image"
     source_id               = var.image_ocid
