@@ -9,14 +9,29 @@
             "cidr_block": "10.1.0.0/16"
         }
     },
+    "oci_securitylist_module": {
+        "tf-sl-http-external": {
+            "vcn_name": "tf-vcn1",
+            "ingress_iana_protocol_number": "6",
+            "ingress_source": "0.0.0.0/0",
+            "tcp_ingress_port": 80
+        },
+        "tf-sl-all-internal-subnet2": {
+            "vcn_name": "tf-vcn1",
+            "ingress_iana_protocol_number": "all",
+            "ingress_source": "10.1.21.0/24"
+        }
+    },
     "oci_subnet_module": {
         "tf-vcn1-subnet1": {
             "vcn_name": "tf-vcn1",
-            "cidr_block": "10.1.20.0/24"
+            "cidr_block": "10.1.20.0/24",
+            "securitylists": ["tf-sl-http-external"]
         },
         "tf-vcn1-subnet2": {
             "vcn_name": "tf-vcn1",
-            "cidr_block": "10.1.21.0/24"
+            "cidr_block": "10.1.21.0/24",
+            "securitylists": ["tf-sl-http-external", "tf-sl-all-internal-subnet2"]
         }
     },
     "oci_instance_module": {

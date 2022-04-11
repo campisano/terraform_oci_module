@@ -15,9 +15,23 @@ module "oci_vcn" {
 
   for_each = var.oci_vcn_module
 
-  name              = each.key
-  compartment_id    = oci_identity_compartment.compartment.compartment_id
-  cidr_block        = each.value.cidr_block
+  name           = each.key
+  compartment_id = oci_identity_compartment.compartment.compartment_id
+  cidr_block     = each.value.cidr_block
+}
+
+module "oci_securitylist" {
+  source = "./modules/oci/securitylist"
+
+  for_each = var.oci_securitylist_module
+
+  name                         = each.key
+  compartment_id               = oci_identity_compartment.compartment.compartment_id
+  vcn                          = module.oci_vcn[each.value.vcn_name].vcn
+  ingress_iana_protocol_number = each.value.ingress_iana_protocol_number
+  ingress_source               = each.value.ingress_source
+  tcp_ingress_port             = lookup(each.value, "tcp_ingress_port", null)
+  udp_ingress_port             = lookup(each.value, "udp_ingress_port", null)
 }
 
 module "oci_subnet" {
@@ -30,6 +44,7 @@ module "oci_subnet" {
   vcn               = module.oci_vcn[each.value.vcn_name].vcn
   ad_name           = data.oci_identity_availability_domain.ad.name
   cidr_block        = each.value.cidr_block
+  security_list_ids = [for sl_name in each.value.securitylists: module.oci_securitylist[sl_name].securitylist.id]
 }
 
 module "oci_instance" {
