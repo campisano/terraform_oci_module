@@ -65,3 +65,17 @@ module "oci_instance" {
   static_ip        = lookup(each.value, "static_ip", false)
   init_script_path = lookup(each.value, "init_script_path", null)
 }
+
+module "oci_networkloadbalancer" {
+  source = "./modules/oci/networkloadbalancer"
+
+  for_each = var.oci_networkloadbalancer_module
+
+  name              = each.key
+  compartment_id    = oci_identity_compartment.compartment.compartment_id
+  subnet_id         = module.oci_subnet[each.value.subnet_name].subnet.id
+  listener_port     = each.value.listener_port
+  healthcheck_port  = each.value.healthcheck_port
+  backend_port      = each.value.backend_port
+  backend_instances = {for i_name in each.value.backend_instances: i_name => module.oci_instance[i_name].instance}
+}

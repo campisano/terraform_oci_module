@@ -53,5 +53,14 @@
             "static_ip": true,
             "init_script_path": "init_script.sh"
         }
+    },
+    "oci_networkloadbalancer_module": {
+        "tf-sn2-amp": {
+            "subnet_name": "tf-vcn1-subnet1",
+            "listener_port": 80,
+            "healthcheck_port": 80,
+            "backend_port": 80,
+            "backend_instances": ["tf-instance1", "tf-instance2"]
+        }
     }
 }
