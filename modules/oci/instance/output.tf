@@ -1,3 +1,3 @@
-output "static_ip" {
-  value = oci_core_instance.instance.public_ip
+output "instance" {
+  value = oci_core_instance.instance
 }

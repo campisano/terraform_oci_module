@@ -1,4 +1,4 @@
-resource "oci_core_security_list" "securitylist" {
+resource "oci_core_security_list" "security_list" {
   compartment_id = var.compartment_id
   display_name   = var.name
   vcn_id         = var.vcn.id
