@@ -16,7 +16,7 @@ module "oci_vcn" {
   for_each = var.oci_vcn_module
 
   name           = each.key
-  compartment_id = oci_identity_compartment.compartment.compartment_id
+  compartment_id = oci_identity_compartment.compartment.id
   cidr_block     = each.value.cidr_block
 }
 
@@ -26,7 +26,7 @@ module "oci_securitylist" {
   for_each = var.oci_securitylist_module
 
   name                         = each.key
-  compartment_id               = oci_identity_compartment.compartment.compartment_id
+  compartment_id               = oci_identity_compartment.compartment.id
   vcn                          = module.oci_vcn[each.value.vcn_name].vcn
   ingress_iana_protocol_number = each.value.ingress_iana_protocol_number
   ingress_source               = each.value.ingress_source
@@ -40,7 +40,7 @@ module "oci_subnet" {
   for_each = var.oci_subnet_module
 
   name              = each.key
-  compartment_id    = oci_identity_compartment.compartment.compartment_id
+  compartment_id    = oci_identity_compartment.compartment.id
   vcn               = module.oci_vcn[each.value.vcn_name].vcn
   ad_name           = data.oci_identity_availability_domain.ad.name
   cidr_block        = each.value.cidr_block
@@ -53,7 +53,7 @@ module "oci_instance" {
   for_each = var.oci_instance_module
 
   name             = each.key
-  compartment_id   = oci_identity_compartment.compartment.compartment_id
+  compartment_id   = oci_identity_compartment.compartment.id
   subnet_id        = module.oci_subnet[each.value.subnet_name].subnet.id
   ad_name          = data.oci_identity_availability_domain.ad.name
   keypair_path     = each.value.keypair_path
@@ -72,7 +72,7 @@ module "oci_networkloadbalancer" {
   for_each = var.oci_networkloadbalancer_module
 
   name              = each.key
-  compartment_id    = oci_identity_compartment.compartment.compartment_id
+  compartment_id    = oci_identity_compartment.compartment.id
   subnet_id         = module.oci_subnet[each.value.subnet_name].subnet.id
   listener_port     = each.value.listener_port
   healthcheck_port  = each.value.healthcheck_port
